@@ -1,24 +1,14 @@
--- Check if the database 'hbnb_test_db' already exists
-SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'hbnb_test_db';
+-- Check for the existence of user and create if not exist
+CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
 
--- If the database doesn't exist, create it
-IF @@rowcount = 0 THEN
-  CREATE DATABASE hbnb_test_db;
-END IF;
+-- Check for the existence of the database and create if not exist
+CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 
--- Check if the user 'hbnb_test' already exists
-SELECT User FROM mysql.user WHERE User = 'hbnb_test' AND Host = 'localhost';
+-- Grant all privilèges on hbnb_dev_db to the user
+GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_dev'@'localhost';
 
--- If the user doesn't exist, create it
-IF @@rowcount = 0 THEN
-  CREATE USER hbnb_test@localhost IDENTIFIED BY 'hbnb_test_pwd';
-END IF;
+-- Grant select privilège on performance_schema to the user
+GRANT SELECT ON performance_schema.* TO 'hbnb_dev'@'localhost';
 
--- Grant all privileges on 'hbnb_test_db' to 'hbnb_test'
-GRANT ALL PRIVILEGES ON hbnb_test_db.* TO hbnb_test@localhost;
-
--- Grant SELECT privilege on 'performance_schema' to 'hbnb_test'
-GRANT SELECT ON performance_schema.* TO hbnb_test@localhost;
-
--- Flush privileges to apply changes immediately
+-- Apply changes
 FLUSH PRIVILEGES;
