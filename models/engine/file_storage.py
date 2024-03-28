@@ -31,11 +31,12 @@ class FileStorage:
         if cls is None:
             return FileStorage.__objects
         else:
-            dict_obj = {}
-            for key, obj in self.__objects.items():
-                if isinstance(obj, class_dict.get(cls.__name__)):
-                    dict_obj[key] = obj
-            return dict_obj
+            new_dict = {}
+            for key, value in self.__objects.items():
+                tmp = {key: value}
+                if cls == class_dict[value.to_dict()["__class__"]]:
+                    new_dict.update(tmp)
+            return new_dict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -81,3 +82,7 @@ class FileStorage:
             # concatenate it with the object's id
             # remove the corresponding key-value pair from __objects
             self.__objects.pop(obj.to_dict()["__class__"] + "." + obj.id)
+
+    def close(self):
+        """Update the objects"""
+        self.reload()
