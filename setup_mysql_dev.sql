@@ -1,14 +1,11 @@
--- Check for the existence of user and create if not exist
-CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
+-- Create database and user
 
--- Check for the existence of the database and create if not exist
+-- database
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
+USE hbnb_dev_db;
 
--- Grant all privilèges on hbnb_dev_db to the user
-GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_dev'@'localhost';
-
--- Grant select privilège on performance_schema to the user
+-- user
+CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
 GRANT SELECT ON performance_schema.* TO 'hbnb_dev'@'localhost';
-
--- Apply changes
+GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_dev'@'localhost';
 FLUSH PRIVILEGES;
