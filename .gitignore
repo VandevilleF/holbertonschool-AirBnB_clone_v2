@@ -5,3 +5,4 @@
 *.json
 test_params_create
 main_delete.py
+7-dump.sql
