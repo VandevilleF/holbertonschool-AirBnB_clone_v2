@@ -14,7 +14,7 @@ def teardown_session():
 
 
 @app.route("/states_list", strict_slashes=False)
-def display_state():
+def states():
     return render_template("7-states_list.html", states=storage.all(State))
 
 
