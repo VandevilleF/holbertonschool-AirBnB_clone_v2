@@ -25,6 +25,7 @@ def states():
 def cities_state_id(id):
     """List all states or state found with id"""
     states = storage.all(State).values()
+    state = None
     for obj in states:
         if id == obj.id:
             state = obj
